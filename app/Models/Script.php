@@ -21,4 +21,6 @@ class Script extends Model
     protected $casts = [
         'status' => ScriptStatus::class,
     ];
+
+
 }

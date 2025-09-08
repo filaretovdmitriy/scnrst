@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-enum ScriptStatus: string
+enum ScriptStatus: int
 {
-    case DRAFT = 'draft';
-    case PUBLISHED = 'published';
+    case DRAFT = 0;
+    case PUBLISHED = 1;
 }
