@@ -11,11 +11,10 @@ class ScriptController extends Controller
 {
     public function index()
     {
-        //$scripts = Script::all();
+        $scripts = Script::all();
+        return response()->json($scripts);
 
-        //return response()->json($scripts);3
 
-        return ('Test index');
     }
 
 }
