@@ -11,5 +11,4 @@ class ScriptService
     {
         return Script::all();
     }
-
 }
