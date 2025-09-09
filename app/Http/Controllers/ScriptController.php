@@ -1,20 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
-use App\Models\Script;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use ScriptService;
 
 class ScriptController extends Controller
-
 {
-    public function index()
+    public function index(ScriptService $scriptService): JsonResponse
     {
-        $scripts = Script::all();
+        $scripts = $scriptService->getAll();
         return response()->json($scripts);
-
-
     }
-
 }
