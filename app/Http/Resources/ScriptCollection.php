@@ -14,8 +14,16 @@ class ScriptCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return [
-            'data' => $this->collection,
-        ];
+        return $this->collection->map(function ($script) {
+            return [
+                'id' => $script->id,
+                'name' => $script->name,
+                'description' => $script->description,
+                'status' => $script->status,
+                'duration' => $script->duration,
+                'created_at' => $script->created_at,
+                'updated_at' => $script->updated_at,
+            ];
+        })->toArray();
     }
 }

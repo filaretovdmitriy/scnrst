@@ -7,7 +7,7 @@ use App\Services\ScriptService;
 
 class ScriptController extends Controller
 {
-    public function index(ScriptService $scriptService)
+    public function index(ScriptService $scriptService): ScriptCollection
     {
         $scripts = $scriptService->getAll();
 

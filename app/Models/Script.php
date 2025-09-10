@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\ScriptStatus;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,10 +19,10 @@ class Script extends Model
         'status',
     ];
 
-    protected function status(): Attribute
+    protected function casts(): array
     {
-        return Attribute::make(
-            get: fn (string $value) => ScriptStatus::from($value),
-        );
+        return [
+            'status' => ScriptStatus::class,
+        ];
     }
 }
