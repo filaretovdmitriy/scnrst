@@ -1,0 +1,21 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "no_extra_blank_lines": {
+            "tokens": [
+                "extra",
+                "throw",
+                "use",
+                "use_trait",
+                "return",
+                "curly_brace_block"
+            ]
+        },
+        "no_whitespace_in_blank_line": true,
+        "no_trailing_whitespace": true,
+        "blank_line_after_namespace": true,
+        "method_argument_space": {
+            "on_multiline": "ensure_fully_multiline"
+        }
+    }
+}

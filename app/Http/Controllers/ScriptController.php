@@ -1,20 +1,16 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
-use App\Models\Script;
-use Illuminate\Http\Request;
+use App\Http\Resources\ScriptCollection;
+use App\Services\ScriptService;
 
 class ScriptController extends Controller
-
 {
-    public function index()
+    public function index(ScriptService $scriptService): ScriptCollection
     {
-        $scripts = Script::all();
-        return response()->json($scripts);
+        $scripts = $scriptService->getAll();
 
-
+        return new ScriptCollection($scripts);
     }
-
 }

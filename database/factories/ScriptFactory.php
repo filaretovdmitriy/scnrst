@@ -16,8 +16,8 @@ class ScriptFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     protected $model = Script::class;
+
     public function definition(): array
     {
         return [

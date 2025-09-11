@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Enums\ScriptStatus;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class Script extends Model
 {
     use HasFactory;
@@ -18,9 +19,10 @@ class Script extends Model
         'status',
     ];
 
-    protected $casts = [
-        'status' => ScriptStatus::class,
-    ];
-
-
+    protected function casts(): array
+    {
+        return [
+            'status' => ScriptStatus::class,
+        ];
+    }
 }
