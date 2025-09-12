@@ -11,12 +11,10 @@ use Illuminate\Http\JsonResponse;
 
 class ScriptController extends Controller
 {
-
-
     public function show(ScriptService $scriptService, int $id): ScriptResource|JsonResponse
     {
         $script = $scriptService->getById($id);
-        if (!$script) {
+        if (! $script) {
             return ApiResponse::error('Not found', 404);
         }
 
@@ -37,7 +35,7 @@ class ScriptController extends Controller
     ): ScriptResource|JsonResponse {
         $script = $scriptService->update($id, $request->validated());
 
-        if (!$script) {
+        if (! $script) {
             return ApiResponse::error('Not found', 404);
         }
 
@@ -48,9 +46,10 @@ class ScriptController extends Controller
     {
         $deleted = $scriptService->delete($id);
 
-        if (!$deleted) {
+        if (! $deleted) {
             return ApiResponse::error('Not found', 404);
         }
+
         return ApiResponse::success(new ScriptResource($scriptService));
     }
 }
