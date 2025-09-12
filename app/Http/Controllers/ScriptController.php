@@ -4,35 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreScriptRequest;
 use App\Http\Requests\UpdateScriptRequest;
-use App\Http\Resources\ScriptCollection;
 use App\Http\Resources\ScriptResource;
 use App\Services\ScriptService;
+use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 
 class ScriptController extends Controller
 {
-    public function index(ScriptService $scriptService): ScriptCollection
-    {
-        $scripts = $scriptService->getAll();
 
-        return new ScriptCollection($scripts);
-    }
 
     public function show(ScriptService $scriptService, int $id): ScriptResource|JsonResponse
     {
         $script = $scriptService->getById($id);
-        if (! $script) {
-            return response()->json(['message' => 'not found'], 404);
+        if (!$script) {
+            return ApiResponse::error('Not found', 404);
         }
 
-        return new ScriptResource($scriptService);
+        return ApiResponse::success(new ScriptResource($scriptService));
     }
 
-    public function store(StoreScriptRequest $request, ScriptService $scriptService): ScriptResource
+    public function store(StoreScriptRequest $request, ScriptService $scriptService): JsonResponse
     {
         $script = $scriptService->create($request->validated());
 
-        return new ScriptResource($script);
+        return ApiResponse::success(new ScriptResource($script));
     }
 
     public function update(
@@ -42,21 +37,20 @@ class ScriptController extends Controller
     ): ScriptResource|JsonResponse {
         $script = $scriptService->update($id, $request->validated());
 
-        if (! $script) {
-            return response()->json(['message' => 'Not found', 'result' => 'error'], 404);
+        if (!$script) {
+            return ApiResponse::error('Not found', 404);
         }
 
-        return new ScriptResource($script);
+        return ApiResponse::success(new ScriptResource($scriptService));
     }
 
     public function destroy(ScriptService $scriptService, int $id): JsonResponse
     {
         $deleted = $scriptService->delete($id);
 
-        if (! $deleted) {
-            return response()->json(['message' => 'Not found'], 404);
+        if (!$deleted) {
+            return ApiResponse::error('Not found', 404);
         }
-
-        return response()->json(['result' => 'success'], 200);
+        return ApiResponse::success(new ScriptResource($scriptService));
     }
 }
