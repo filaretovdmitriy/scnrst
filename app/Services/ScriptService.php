@@ -12,7 +12,7 @@ class ScriptService
         return Script::all();
     }
 
-    public function getById(int $id): Script
+    public function getById(int $id): ?Script
     {
         return Script::find($id);
     }
@@ -26,7 +26,7 @@ class ScriptService
     {
         $script = Script::find($id);
 
-        if (!$script) {
+        if (! $script) {
             return null;
         }
 
@@ -39,10 +39,10 @@ class ScriptService
     {
         $script = Script::find($id);
 
-        if (!$script) {
+        if (! $script) {
             return false;
         }
 
-        return (bool)$script->delete();
+        return (bool) $script->delete();
     }
 }
