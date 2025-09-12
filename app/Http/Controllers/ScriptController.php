@@ -8,7 +8,6 @@ use App\Http\Resources\ScriptCollection;
 use App\Http\Resources\ScriptResource;
 use App\Services\ScriptService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ScriptController extends Controller
 {
@@ -22,7 +21,7 @@ class ScriptController extends Controller
     public function show(ScriptService $scriptService, int $id): ScriptResource|JsonResponse
     {
         $script = $scriptService->getById($id);
-        if (!$script) {
+        if (! $script) {
             return response()->json(['message' => 'not found'], 404);
         }
 
@@ -43,7 +42,7 @@ class ScriptController extends Controller
     ): ScriptResource|JsonResponse {
         $script = $scriptService->update($id, $request->validated());
 
-        if (!$script) {
+        if (! $script) {
             return response()->json(['message' => 'Not found', 'result' => 'error'], 404);
         }
 
@@ -54,7 +53,7 @@ class ScriptController extends Controller
     {
         $deleted = $scriptService->delete($id);
 
-        if (!$deleted) {
+        if (! $deleted) {
             return response()->json(['message' => 'Not found'], 404);
         }
 
