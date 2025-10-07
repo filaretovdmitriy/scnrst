@@ -5,51 +5,45 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreScriptRequest;
 use App\Http\Requests\UpdateScriptRequest;
 use App\Http\Resources\ScriptResource;
+use App\Models\Script;
 use App\Services\ScriptService;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 
 class ScriptController extends Controller
 {
-    public function show(ScriptService $scriptService, int $id): ScriptResource|JsonResponse
-    {
-        $script = $scriptService->getById($id);
-        if (! $script) {
-            return ApiResponse::error('Not found', 404);
-        }
+    private scriptService $scriptService;
 
-        return ApiResponse::success(new ScriptResource($scriptService));
+    public function __construct(ScriptService $scriptService)
+    {
+        $this->scriptService = $scriptService;
     }
 
-    public function store(StoreScriptRequest $request, ScriptService $scriptService): JsonResponse
+    public function show(Script $script): ScriptResource|JsonResponse
     {
-        $script = $scriptService->create($request->validated());
+        return new ScriptResource($script);
+    }
 
-        return ApiResponse::success(new ScriptResource($script));
+    public function store(StoreScriptRequest $request): ScriptResource|JsonResponse
+    {
+        $script = $this->scriptService->create($request->validated());
+
+        return new ScriptResource($script);
     }
 
     public function update(
         UpdateScriptRequest $request,
-        ScriptService $scriptService,
-        int $id
+        Script $script
     ): ScriptResource|JsonResponse {
-        $script = $scriptService->update($id, $request->validated());
+        $this->scriptService->update($script->id, $request->validated());
 
-        if (! $script) {
-            return ApiResponse::error('Not found', 404);
-        }
-
-        return ApiResponse::success(new ScriptResource($scriptService));
+        return ApiResponse::success(new ScriptResource($this->scriptService));
     }
 
-    public function destroy(ScriptService $scriptService, int $id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
-        $deleted = $scriptService->delete($id);
+        $deleted = $this->scriptService->delete($id);
 
-        if (! $deleted) {
-            return ApiResponse::error('Not found', 404);
-        }
-
-        return ApiResponse::success(new ScriptResource($scriptService));
+        return ApiResponse::success(new ScriptResource($this->scriptService));
     }
 }
