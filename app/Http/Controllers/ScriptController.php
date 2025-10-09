@@ -19,6 +19,13 @@ class ScriptController extends Controller
         $this->scriptService = $scriptService;
     }
 
+    public function index(): JsonResponse
+    {
+        $scripts = $this->scriptService->getAll();
+
+        return ApiResponse::success(ScriptResource::collection($scripts));
+    }
+
     public function show(Script $script): ScriptResource|JsonResponse
     {
         return new ScriptResource($script);
@@ -33,8 +40,9 @@ class ScriptController extends Controller
 
     public function update(
         UpdateScriptRequest $request,
-        Script $script
-    ): ScriptResource|JsonResponse {
+        Script              $script
+    ): ScriptResource|JsonResponse
+    {
         $this->scriptService->update($script->id, $request->validated());
 
         return ApiResponse::success(new ScriptResource($this->scriptService));

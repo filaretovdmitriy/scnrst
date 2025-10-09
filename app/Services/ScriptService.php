@@ -26,7 +26,7 @@ class ScriptService
     {
         $script = Script::find($id);
 
-        if (! $script) {
+        if (!$script) {
             return null;
         }
 
@@ -39,10 +39,6 @@ class ScriptService
     {
         $script = Script::find($id);
 
-        if (! $script) {
-            return false;
-        }
-
-        return (bool) $script->delete();
+        return (bool)$script?->delete();
     }
 }
