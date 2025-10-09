@@ -12,11 +12,9 @@ use Illuminate\Http\JsonResponse;
 
 class ScriptController extends Controller
 {
-    private scriptService $scriptService;
 
-    public function __construct(ScriptService $scriptService)
+    public function __construct(private ScriptService $scriptService)
     {
-        $this->scriptService = $scriptService;
     }
 
     public function index(): JsonResponse
