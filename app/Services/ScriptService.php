@@ -12,11 +12,6 @@ class ScriptService
         return Script::all();
     }
 
-    public function getById(int $id): ?Script
-    {
-        return Script::find($id);
-    }
-
     public function create(array $data): Script
     {
         return Script::create($data);
@@ -24,21 +19,22 @@ class ScriptService
 
     public function update(int $id, array $data): ?Script
     {
-        $script = Script::find($id);
-
-        if (!$script) {
-            return null;
-        }
+        $script = $this->getById($id);
 
         $script->update($data);
 
         return $script;
     }
 
+    public function getById(int $id): ?Script
+    {
+        return Script::findOrFail($id);
+    }
+
     public function delete(int $id): bool
     {
-        $script = Script::find($id);
+        $script = Script::findOrFail($id);
 
-        return (bool)$script?->delete();
+        return $script->delete();
     }
 }

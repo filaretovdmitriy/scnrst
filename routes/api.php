@@ -8,6 +8,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Route::get('/scripts', [ScriptController::class, 'index']);
-
 Route::apiResource('scripts', ScriptController::class);
