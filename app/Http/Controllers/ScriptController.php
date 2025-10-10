@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\ScriptData;
 use App\Http\Requests\StoreScriptRequest;
 use App\Http\Requests\UpdateScriptRequest;
+use App\Http\Resources\ScriptCollection;
 use App\Http\Resources\ScriptResource;
 use App\Models\Script;
 use App\Services\ScriptService;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ScriptController extends Controller
 {
-    public function __construct(private ScriptService $scriptService) {}
+    public function __construct(private ScriptService $scriptService)
+    {
+    }
 
-    public function index(): AnonymousResourceCollection
+    public function index(): ScriptCollection
     {
         $scripts = $this->scriptService->getAll();
 
-        return ScriptResource::collection($scripts);
+        return new ScriptCollection($scripts);
     }
 
     public function show(Script $script): ScriptResource
@@ -34,9 +37,11 @@ class ScriptController extends Controller
 
     public function update(
         UpdateScriptRequest $request,
-        Script $script
-    ): ScriptResource {
-        $this->scriptService->update($script->id, $request->validated());
+        Script              $script
+    ): ScriptResource
+    {
+        $dto = ScriptData::fromArray($request->validated());
+        $this->scriptService->update($script->id, (array)$dto);
 
         return new ScriptResource($this->scriptService);
     }
