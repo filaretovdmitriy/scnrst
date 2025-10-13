@@ -5,15 +5,11 @@ namespace App\DTOs;
 class ScriptData
 {
     public function __construct(
-        public readonly int    $id,
+        public readonly int $id,
         public readonly string $description,
-        public readonly int    $status,
-        public readonly int    $duration,
-        public readonly string $created_at,
-        public readonly string $updated_at,
-    )
-    {
-    }
+        public readonly int $status,
+        public readonly int $duration,
+    ) {}
 
     public static function fromArray(array $data): self
     {
@@ -22,8 +18,6 @@ class ScriptData
             description: $data['description'],
             status: $data['status'],
             duration: $data['duration'],
-            created_at: $data['created_at'],
-            updated_at: $data['updated_at'],
         );
     }
 
@@ -34,9 +28,7 @@ class ScriptData
             'description' => $this->description,
             'status' => $this->status,
             'duration' => $this->duration,
-           
+
         ];
     }
 }
-
-
