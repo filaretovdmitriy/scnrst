@@ -28,7 +28,8 @@ class ScriptController extends Controller
 
     public function store(StoreScriptRequest $request): ScriptResource
     {
-        $script = $this->scriptService->create($request->validated());
+        $dto = ScriptData::fromArray($request->validated());
+        $script = $this->scriptService->create($dto);
 
         return new ScriptResource($script);
     }

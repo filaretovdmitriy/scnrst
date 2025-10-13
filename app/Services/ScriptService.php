@@ -13,9 +13,9 @@ class ScriptService
         return Script::all();
     }
 
-    public function create(array $data): Script
+    public function create(ScriptData $data): Script
     {
-        return Script::create($data);
+        return Script::create($data->toArray());
     }
 
     public function update(int $id, ScriptData $data): ?Script
