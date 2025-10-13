@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\ScriptData;
 use App\Models\Script;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -17,11 +18,11 @@ class ScriptService
         return Script::create($data);
     }
 
-    public function update(int $id, array $data): ?Script
+    public function update(int $id, ScriptData $data): ?Script
     {
         $script = $this->getById($id);
 
-        $script->update($data);
+        $script->update($data->toArray());
 
         return $script;
     }

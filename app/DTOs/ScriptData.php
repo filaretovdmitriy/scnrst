@@ -26,6 +26,18 @@ class ScriptData
             updated_at: $data['updated_at'],
         );
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'description' => $this->description,
+            'status' => $this->status,
+            'duration' => $this->duration,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
+    }
 }
 
 

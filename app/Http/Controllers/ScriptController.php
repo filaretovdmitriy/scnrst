@@ -41,7 +41,7 @@ class ScriptController extends Controller
     ): ScriptResource
     {
         $dto = ScriptData::fromArray($request->validated());
-        $this->scriptService->update($script->id, (array)$dto);
+        $this->scriptService->update($script->id, $dto);
 
         return new ScriptResource($this->scriptService);
     }
