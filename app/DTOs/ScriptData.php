@@ -34,8 +34,7 @@ class ScriptData
             'description' => $this->description,
             'status' => $this->status,
             'duration' => $this->duration,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+           
         ];
     }
 }
