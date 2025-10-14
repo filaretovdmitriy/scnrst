@@ -12,7 +12,7 @@ class StoreScriptRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,9 @@ class StoreScriptRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'duration' => 'required|integer',
+            'status' => 'required|integer',
         ];
     }
 }

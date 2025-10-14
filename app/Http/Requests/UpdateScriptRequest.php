@@ -24,6 +24,9 @@ class UpdateScriptRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'duration' => 'required|integer',
+            'status' => 'required|integer',
         ];
     }
 }

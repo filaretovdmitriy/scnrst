@@ -31,4 +31,37 @@ class ScriptControllerTest extends TestCase
         $this->assertCount(10, $response->json('data'));
         $this->assertDatabaseCount('scripts', 10);
     }
+
+    public function test_it_creates_new_script(): void
+    {
+        $data = [
+            'name' => 'Test name',
+            'description' => 'Test description text',
+            'duration' => 1,
+            'status' => 1,
+
+        ];
+
+        $response = $this->postJson('/api/scripts', $data);
+        $response->assertCreated();
+
+        $this->assertDatabaseHas('scripts', [
+            'name' => 'Test name',
+            'description' => 'Test description text',
+            'duration' => 1,
+            'status' => 1,
+        ]);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'description',
+                'duration',
+                'status',
+                'created_at',
+                'updated_at',
+            ]
+        ]);
+    }
 }
