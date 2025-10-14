@@ -1,0 +1,30 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\Script;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class ScriptControllerTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_it_returns_script_list(): void
+    {
+        Script::factory()->count(10)->create();
+        $response = $this->getJson('/api/scripts');
+        $response->assertOk()->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'name',
+                    'description',
+                    'duration',
+                    'status',
+                    'created_at',
+                    'updated_at',
+                ],
+            ]]);
+    }
+}
