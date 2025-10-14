@@ -43,10 +43,10 @@ class ScriptController extends Controller
         return new ScriptResource($this->scriptService->update($script->id, $dto));
     }
 
-    public function destroy(int $id): ScriptResource
+    public function destroy(Script $script)
     {
-        $deleted = $this->scriptService->delete($id);
+        $script->delete();
 
-        return new ScriptResource($this->scriptService);
+        return response()->noContent();
     }
 }

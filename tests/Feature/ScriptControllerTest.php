@@ -14,6 +14,7 @@ class ScriptControllerTest extends TestCase
     {
         Script::factory()->count(10)->create();
         $response = $this->getJson('/api/scripts');
+
         $response->assertOk()->assertJsonStructure([
             'data' => [
                 '*' => [
@@ -26,5 +27,8 @@ class ScriptControllerTest extends TestCase
                     'updated_at',
                 ],
             ]]);
+
+        $this->assertCount(10, $response->json('data'));
+        $this->assertDatabaseCount('scripts', 10);
     }
 }
