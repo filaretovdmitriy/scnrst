@@ -61,12 +61,12 @@ class ScriptControllerTest extends TestCase
 
     public function test_it_updates_script(): void
     {
-        $script = Script::factory()->create([
+        $oldData = [
             'name' => 'Old script name',
             'description' => 'Old script description',
             'duration' => 2,
             'status' => 0,
-        ]);
+        ];
 
         $updateData = [
             'name' => 'Updated script name',
@@ -75,11 +75,15 @@ class ScriptControllerTest extends TestCase
             'status' => 1,
         ];
 
+        $script = Script::factory()->create($oldData);
+
         $response = $this->putJson("/api/scripts/{$script->id}", $updateData);
 
         $response->assertOk();
 
         $this->assertDatabaseHas('scripts', $updateData);
+
+        $this->assertDatabaseMissing('scripts', $oldData);
     }
 
     public function test_it_deletes_script(): void
