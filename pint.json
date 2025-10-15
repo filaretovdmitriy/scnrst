@@ -3,12 +3,17 @@
     "rules": {
         "no_extra_blank_lines": {
             "tokens": [
+                "break",
+                "continue",
                 "extra",
+                "return",
                 "throw",
                 "use",
                 "use_trait",
-                "return",
-                "curly_brace_block"
+                "curly_brace_block",
+                "switch",
+                "case",
+                "default"
             ]
         },
         "no_whitespace_in_blank_line": true,

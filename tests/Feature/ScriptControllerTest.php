@@ -39,18 +39,12 @@ class ScriptControllerTest extends TestCase
             'description' => 'Test description text',
             'duration' => 1,
             'status' => 1,
-
         ];
 
         $response = $this->postJson('/api/scripts', $data);
         $response->assertCreated();
 
-        $this->assertDatabaseHas('scripts', [
-            'name' => 'Test name',
-            'description' => 'Test description text',
-            'duration' => 1,
-            'status' => 1,
-        ]);
+        $this->assertDatabaseHas('scripts', $data);
 
         $response->assertJsonStructure([
             'data' => [
@@ -65,7 +59,7 @@ class ScriptControllerTest extends TestCase
         ]);
     }
 
-    public function test_it_updates_existing_script(): void
+    public function test_it_updates_script(): void
     {
         $script = Script::factory()->create([
             'name' => 'Old script name',
@@ -85,12 +79,19 @@ class ScriptControllerTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertDatabaseHas('scripts', [
-            'id' => $script->id,
-            'name' => 'Updated script name',
-            'description' => 'Updated script description',
-            'duration' => 1,
-            'status' => 1,
-        ]);
+        $this->assertDatabaseHas('scripts', $updateData);
     }
+
+    public function test_it_deletes_script(): void
+    {
+        $script = Script::factory()->create();
+
+        $response = $this->deleteJson("/api/scripts/{$script->id}");
+
+        $response->assertStatus(204);
+
+        $this->assertDatabaseMissing('scripts', ['id' => $script->id]);
+    }
+
+
 }

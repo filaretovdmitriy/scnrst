@@ -25,20 +25,18 @@ class ScriptService
         return $script;
     }
 
-    public function getById(int $id): ?Script
-    {
-        return Script::find($id) ?: null;
-    }
-
-    public function getByIdOrFail(int $id): ?Script
+    public function getByIdOrFail(int $id): Script
     {
         return Script::findOrFail($id);
     }
 
-    public function delete(int $id): bool
+    public function delete(Script $script): bool
     {
-        $script = $this->getById($id);
-
         return $script->delete();
+    }
+
+    public function getById(int $id): ?Script
+    {
+        return Script::find($id) ?: null;
     }
 }
