@@ -18,7 +18,7 @@ class ScriptService
         return Script::create($data->toArray());
     }
 
-    public function update(Script $script, ScriptData $data): ?Script
+    public function update(Script $script, ScriptData $data): Script
     {
         $script->update($data->toArray());
 
@@ -37,6 +37,6 @@ class ScriptService
 
     public function getById(int $id): ?Script
     {
-        return Script::find($id) ?: null;
+        return Script::find($id);
     }
 }
