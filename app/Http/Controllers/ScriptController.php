@@ -12,9 +12,7 @@ use App\Services\ScriptService;
 
 class ScriptController extends Controller
 {
-    public function __construct(private ScriptService $scriptService)
-    {
-    }
+    public function __construct(private ScriptService $scriptService) {}
 
     public function index(): ScriptCollection
     {
@@ -38,9 +36,8 @@ class ScriptController extends Controller
 
     public function update(
         UpdateScriptRequest $request,
-        Script              $script
-    ): ScriptResource
-    {
+        Script $script
+    ): ScriptResource {
         $dto = ScriptData::fromArray($request->validated());
 
         return new ScriptResource($this->scriptService->update($script, $dto));
@@ -48,7 +45,6 @@ class ScriptController extends Controller
 
     public function destroy(Script $script)
     {
-
         $this->scriptService->delete($script);
 
         return response()->noContent();
