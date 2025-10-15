@@ -40,7 +40,7 @@ class ScriptController extends Controller
     ): ScriptResource {
         $dto = ScriptData::fromArray($request->validated());
 
-        return new ScriptResource($this->scriptService->update($script->id, $dto));
+        return new ScriptResource($this->scriptService->update($script, $dto));
     }
 
     public function destroy(Script $script)

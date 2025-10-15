@@ -18,10 +18,8 @@ class ScriptService
         return Script::create($data->toArray());
     }
 
-    public function update(int $id, ScriptData $data): ?Script
+    public function update(Script $script, ScriptData $data): ?Script
     {
-        $script = $this->getById($id);
-
         $script->update($data->toArray());
 
         return $script;
@@ -34,7 +32,7 @@ class ScriptService
 
     public function getByIdOrFail(int $id): ?Script
     {
-        return Script::findOrFail($id) ?: null;
+        return Script::findOrFail($id);
     }
 
     public function delete(int $id): bool

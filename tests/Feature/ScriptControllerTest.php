@@ -61,7 +61,36 @@ class ScriptControllerTest extends TestCase
                 'status',
                 'created_at',
                 'updated_at',
-            ]
+            ],
+        ]);
+    }
+
+    public function test_it_updates_existing_script(): void
+    {
+        $script = Script::factory()->create([
+            'name' => 'Old script name',
+            'description' => 'Old script description',
+            'duration' => 2,
+            'status' => 0,
+        ]);
+
+        $updateData = [
+            'name' => 'Updated script name',
+            'description' => 'Updated script description',
+            'duration' => 1,
+            'status' => 1,
+        ];
+
+        $response = $this->putJson("/api/scripts/{$script->id}", $updateData);
+
+        $response->assertOk();
+
+        $this->assertDatabaseHas('scripts', [
+            'id' => $script->id,
+            'name' => 'Updated script name',
+            'description' => 'Updated script description',
+            'duration' => 1,
+            'status' => 1,
         ]);
     }
 }
