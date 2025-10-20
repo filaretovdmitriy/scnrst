@@ -25,7 +25,7 @@ class GigaChatService
 
     public function rewriteText(string $text = 'Пример текста', string $instructions = 'Перепиши текст, сохранив общий смысл'): string
     {
-        if (! $this->accessToken) {
+        if (!$this->accessToken) {
             $this->auth();
         }
 
@@ -42,7 +42,7 @@ class GigaChatService
         $response = Http::withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
 
         if ($response->failed()) {
-            throw new RuntimeException('Api error'.$response->body());
+            throw new RuntimeException('Api error' . $response->body());
         }
 
         return $response->json('choices.0.message.content');
@@ -58,7 +58,7 @@ class GigaChatService
         ]);
 
         if ($response->failed()) {
-            throw new RuntimeException('Auth error:'.$response->body());
+            throw new RuntimeException('Auth error:' . $response->body());
         }
 
         $this->accessToken = $response->json('access_token');
