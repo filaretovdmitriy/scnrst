@@ -37,7 +37,7 @@ return [
     'gigachat' => [
         'client_id' => env('GIGACHAT_CLIENT_ID'),
         'client_secret' => env('GIGACHAT_CLIENT_SECRET_KEY'),
-        'base_url' => env('https://gigachat.devices.sberbank.ru/api/v1'),
+        'base_url' => env('GIGACHAT_API_URL', 'https://gigachat.devices.sberbank.ru/api/v1'),
     ],
 
 ];

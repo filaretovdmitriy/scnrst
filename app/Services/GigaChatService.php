@@ -14,13 +14,13 @@ class GigaChatService
 
     protected string $clientSecret;
 
-    protected string $accessToken;
+    protected ?string $accessToken = null;
 
     public function __construct()
     {
-        $this->baseUrl = config('api_url');
-        $this->clientId = config('client_id');
-        $this->clientSecret = config('client_secret');
+        $this->baseUrl = config('services.gigachat.base_url');
+        $this->clientId = config('services.gigachat.client_id');
+        $this->clientSecret = config('services.gigachat.client_secret');
     }
 
     public function rewriteText(string $text = 'Пример текста', string $instructions = 'Перепиши текст, сохранив общий смысл'): string
