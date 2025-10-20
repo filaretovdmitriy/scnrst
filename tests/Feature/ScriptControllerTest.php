@@ -94,10 +94,9 @@ class ScriptControllerTest extends TestCase
 
         $response->assertStatus(204);
 
-        $response->assertJsonStructure(['text']);
+        $this->assertDatabaseMissing('scripts', [
+            'id' => $script->id,
+        ]);
 
-        $rewrittenText = $response->json('text');
-
-        $this->assertNotEquals($script->description, $rewrittenText, '');
     }
 }

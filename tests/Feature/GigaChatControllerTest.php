@@ -15,8 +15,6 @@ class GigaChatControllerTest extends TestCase
 
         $response = $this->post('/api/rewrite/', ['text' => $text]);
 
-        $response->dump();
-
         $response->assertStatus(200);
     }
 }

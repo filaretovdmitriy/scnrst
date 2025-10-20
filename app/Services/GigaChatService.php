@@ -14,11 +14,14 @@ class GigaChatService
 
     protected string $clientSecret;
 
+    protected string $authUrl;
+
     protected ?string $accessToken = null;
 
     public function __construct()
     {
         $this->baseUrl = config('services.gigachat.base_url');
+        $this->authUrl = config('services.gigachat.auth_url');
         $this->clientId = config('services.gigachat.client_id');
         $this->clientSecret = config('services.gigachat.client_secret');
     }
@@ -39,7 +42,7 @@ class GigaChatService
             'max_tokens' => 256,
         ];
 
-        $response = Http::withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
+        $response = Http::withOptions(['verify' => false])->withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
 
         if ($response->failed()) {
             throw new RuntimeException('Api error' . $response->body());
@@ -50,12 +53,16 @@ class GigaChatService
 
     protected function auth(): void
     {
-        $response = Http::asForm()->withHeaders(['RrUID' => Str::uuid()])->post("{$this->baseUrl}/oauth/token", [
-            'scope' => 'GIGACHAT_API_PERS',
-            'grant_type' => 'client_credentials',
-            'client_id' => $this->clientId,
-            'client_secret' => $this->clientSecret,
-        ]);
+        $response = Http::asForm()
+            ->withOptions(['verify' => false])
+            ->withHeaders([
+                'Accept' => 'application/json',
+                'RqUID' => (string)Str::uuid(),
+                'Authorization' => 'Basic ' . $this->clientSecret,
+            ])
+            ->post('https://ngw.devices.sberbank.ru:9443/api/v2/oauth', [
+                'scope' => 'GIGACHAT_API_PERS',
+            ]);
 
         if ($response->failed()) {
             throw new RuntimeException('Auth error:' . $response->body());
