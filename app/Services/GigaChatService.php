@@ -26,7 +26,7 @@ class GigaChatService
         $this->clientSecret = config('services.gigachat.client_secret');
     }
 
-    public function rewriteText(string $text = 'Пример текста', string $instructions = 'Перепиши текст, сохранив общий смысл'): string
+    public function rewriteText(string $text, string $instructions = 'Перепиши текст, сохранив общий смысл'): string
     {
         if (!$this->accessToken) {
             $this->auth();
