@@ -16,6 +16,8 @@ class GigaChatService
 
     protected string $authUrl;
 
+    protected string $default_prompt;
+
     protected ?string $accessToken = null;
 
     public function __construct()
@@ -24,13 +26,16 @@ class GigaChatService
         $this->authUrl = config('services.gigachat.auth_url');
         $this->clientId = config('services.gigachat.client_id');
         $this->clientSecret = config('services.gigachat.client_secret');
+        $this->default_prompt = config('services.gigachat.default_prompt');
     }
 
-    public function rewriteText(string $text, string $instructions = 'Перепиши текст, сохранив общий смысл'): string
+    public function rewriteText(string $text, ?string $instructions = null): string
     {
         if (!$this->accessToken) {
             $this->auth();
         }
+
+        $instructions = $instructions ?? $this->default_prompt;
 
         $payload = [
             'model' => 'GigaChat',
@@ -60,7 +65,7 @@ class GigaChatService
                 'RqUID' => (string)Str::uuid(),
                 'Authorization' => 'Basic ' . $this->clientSecret,
             ])
-            ->post('https://ngw.devices.sberbank.ru:9443/api/v2/oauth', [
+            ->post($this->authUrl, [
                 'scope' => 'GIGACHAT_API_PERS',
             ]);
 
