@@ -36,7 +36,7 @@ class GigaChatService
                 ['role' => 'user', 'content' => $text],
             ],
             'temperature' => 0.7,
-            'max_tokens' => 256,
+            'max_tokens' => 512,
         ];
 
         $response = Http::withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
