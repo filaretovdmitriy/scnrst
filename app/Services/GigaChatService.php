@@ -18,7 +18,7 @@ class GigaChatService
 
     public function __construct()
     {
-        $this->baseUrl = config('base_url');
+        $this->baseUrl = config('api_url');
         $this->clientId = config('client_id');
         $this->clientSecret = config('client_secret');
     }
@@ -50,7 +50,7 @@ class GigaChatService
 
     protected function auth(): void
     {
-        $response = Http::asForm()->withHeaders(['RrUID' => Str::uuid()])->post('https://ngw.devices.sberbank.ru:9443/api/v2/oauth', [
+        $response = Http::asForm()->withHeaders(['RrUID' => Str::uuid()])->post("{$this->baseUrl}/oauth/token", [
             'scope' => 'GIGACHAT_API_PERS',
             'grant_type' => 'client_credentials',
             'client_id' => $this->clientId,
