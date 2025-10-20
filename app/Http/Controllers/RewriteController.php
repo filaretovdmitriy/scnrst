@@ -16,9 +16,6 @@ class RewriteController extends Controller
 
         $result = $gigaChatService->rewriteText($request->text);
 
-
         return response()->json(['text' => $result]);
     }
-
-
 }

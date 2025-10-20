@@ -97,6 +97,5 @@ class ScriptControllerTest extends TestCase
         $this->assertDatabaseMissing('scripts', [
             'id' => $script->id,
         ]);
-
     }
 }

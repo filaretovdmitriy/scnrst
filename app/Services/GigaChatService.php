@@ -31,7 +31,7 @@ class GigaChatService
 
     public function rewriteText(string $text, ?string $instructions = null): string
     {
-        if (!$this->accessToken) {
+        if (! $this->accessToken) {
             $this->auth();
         }
 
@@ -50,7 +50,7 @@ class GigaChatService
         $response = Http::withOptions(['verify' => false])->withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
 
         if ($response->failed()) {
-            throw new RuntimeException('Api error' . $response->body());
+            throw new RuntimeException('Api error'.$response->body());
         }
 
         return $response->json('choices.0.message.content');
@@ -62,15 +62,15 @@ class GigaChatService
             ->withOptions(['verify' => false])
             ->withHeaders([
                 'Accept' => 'application/json',
-                'RqUID' => (string)Str::uuid(),
-                'Authorization' => 'Basic ' . $this->clientSecret,
+                'RqUID' => (string) Str::uuid(),
+                'Authorization' => 'Basic '.$this->clientSecret,
             ])
             ->post($this->authUrl, [
                 'scope' => 'GIGACHAT_API_PERS',
             ]);
 
         if ($response->failed()) {
-            throw new RuntimeException('Auth error:' . $response->body());
+            throw new RuntimeException('Auth error:'.$response->body());
         }
 
         $this->accessToken = $response->json('access_token');
