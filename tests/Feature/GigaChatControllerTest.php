@@ -6,15 +6,28 @@ use Tests\TestCase;
 
 class GigaChatControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
     public function test_it_rewrites_text(): void
     {
-        $text = 'Ехал человек на машине по снегу, свернул на узкую дорогу и застрял.';
+        $originalText = 'Ехал человек на машине по снегу, свернул на узкую дорогу и застрял.';
 
-        $response = $this->post('/api/rewrite/', ['text' => $text]);
+        $response = $this->postJson('/api/rewrite', [
+            'text' => $originalText,
+        ]);
 
         $response->assertStatus(200);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'text',
+            ],
+        ]);
+
+        $rewrittenText = $response->json('data.text');
+
+        $this->assertIsString($rewrittenText);
+
+        $this->assertNotEmpty($rewrittenText);
+
+        $this->assertNotSame($originalText, $rewrittenText, 'Text should be rewritten');
     }
 }

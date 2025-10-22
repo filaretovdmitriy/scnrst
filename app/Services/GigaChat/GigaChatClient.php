@@ -5,26 +5,27 @@ namespace App\Services\GigaChat;
 use App\DTOs\RewriteData;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use RuntimeException;
 
 class GigaChatClient
 {
-    protected string $baseUrl;
+    private string $baseUrl;
 
-    protected string $clientSecret;
+    private string $clientSecret;
 
-    protected string $authUrl;
+    private string $authUrl;
 
-    protected string $default_prompt;
+    private string $defaultPrompt;
 
-    protected ?string $accessToken = null;
+    private ?string $accessToken = null;
 
     public function __construct()
     {
         $this->baseUrl = config('services.gigachat.base_url');
         $this->clientSecret = config('services.gigachat.client_secret');
         $this->authUrl = config('services.gigachat.auth_url');
-        $this->default_prompt = config('services.gigachat.default_prompt');
+        $this->defaultPrompt = config('services.gigachat.default_prompt');
     }
 
     public function sendRewriteRequest(RewriteData $data, ?string $instructions = null): string
@@ -33,7 +34,7 @@ class GigaChatClient
             $this->auth();
         }
 
-        $instructions = $instructions ?? $this->default_prompt;
+        $instructions = $instructions ?? $this->defaultPrompt;
         $textData = $data->text;
         $payload = [
             'model' => 'GigaChat',
@@ -47,7 +48,8 @@ class GigaChatClient
 
         $response = Http::withOptions(['verify' => false])->withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
         if ($response->failed()) {
-            throw new RuntimeException('Api error', $response->body());
+
+            throw new InvalidArgumentException('Api error', $response->body());
         }
 
         return $response->json('choices.0.message.content');

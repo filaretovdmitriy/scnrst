@@ -6,18 +6,17 @@ use App\DTOs\RewriteData;
 
 class GigaChatService
 {
-    protected string $default_prompt;
+    private string $defaultPrompt;
 
     public function __construct()
     {
-        $this->default_prompt = config('services.gigachat.default_prompt');
+        $this->defaultPrompt = config('services.gigachat.default_prompt');
     }
 
     public function rewriteText(RewriteData $data, ?string $instructions = null): string
     {
-        $gigaCharClient = new GigaChatClient;
-        $rewritenText = $gigaCharClient->sendRewriteRequest($data, $instructions);
+        $gigaChatClient = new GigaChatClient;
 
-        return $rewritenText;
+        return $gigaChatClient->sendRewriteRequest($data, $instructions);
     }
 }
