@@ -34,12 +34,12 @@ class GigaChatClient
         }
 
         $instructions = $instructions ?? $this->default_prompt;
-        $textData = $data::from();
+        $textData = $data->text;
         $payload = [
             'model' => 'GigaChat',
             'messages' => [
                 ['role' => 'system', 'content' => $instructions],
-                ['role' => 'user', 'content' => $textData['text']],
+                ['role' => 'user', 'content' => $textData],
             ],
             'temperature' => 0.7,
             'max_tokens' => 256,
