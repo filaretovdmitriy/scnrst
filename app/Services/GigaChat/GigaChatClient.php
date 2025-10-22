@@ -30,7 +30,7 @@ class GigaChatClient
 
     public function sendRewriteRequest(RewriteData $data, ?string $instructions = null): string
     {
-        if (!$this->accessToken) {
+        if (! $this->accessToken) {
             $this->auth();
         }
 
@@ -48,7 +48,6 @@ class GigaChatClient
 
         $response = Http::withOptions(['verify' => false])->withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
         if ($response->failed()) {
-
             throw new InvalidArgumentException('Api error', $response->body());
         }
 
@@ -59,8 +58,8 @@ class GigaChatClient
     {
         $responce = Http::asForm()->withOptions(['verify' => false])->withHeaders([
             'Accept' => 'application/json',
-            'RqUID' => (string)Str::uuid(),
-            'Authorization' => 'Basic ' . $this->clientSecret,
+            'RqUID' => (string) Str::uuid(),
+            'Authorization' => 'Basic '.$this->clientSecret,
         ])->post($this->authUrl, ['scope' => 'GIGACHAT_API_PERS']);
 
         if ($responce->failed()) {
