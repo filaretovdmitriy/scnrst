@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\GigaChat;
 
+use App\DTOs\RewriteData;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use RuntimeException;
 
-class GigaChatService
+class GigaChatClient
 {
     protected string $baseUrl;
-
-    protected string $clientId;
 
     protected string $clientSecret;
 
@@ -23,56 +22,49 @@ class GigaChatService
     public function __construct()
     {
         $this->baseUrl = config('services.gigachat.base_url');
-        $this->authUrl = config('services.gigachat.auth_url');
-        $this->clientId = config('services.gigachat.client_id');
         $this->clientSecret = config('services.gigachat.client_secret');
+        $this->authUrl = config('services.gigachat.auth_url');
         $this->default_prompt = config('services.gigachat.default_prompt');
     }
 
-    public function rewriteText(string $text, ?string $instructions = null): string
+    public function sendRewriteRequest(RewriteData $data, ?string $instructions = null): string
     {
-        if (! $this->accessToken) {
+        if (!$this->accessToken) {
             $this->auth();
         }
 
         $instructions = $instructions ?? $this->default_prompt;
-
+        $textData = $data::from();
         $payload = [
             'model' => 'GigaChat',
             'messages' => [
                 ['role' => 'system', 'content' => $instructions],
-                ['role' => 'user', 'content' => $text],
+                ['role' => 'user', 'content' => $textData['text']],
             ],
             'temperature' => 0.7,
             'max_tokens' => 256,
         ];
 
         $response = Http::withOptions(['verify' => false])->withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
-
         if ($response->failed()) {
-            throw new RuntimeException('Api error'.$response->body());
+            throw new RuntimeException('Api error', $response->body());
         }
 
         return $response->json('choices.0.message.content');
     }
 
-    protected function auth(): void
+    private function auth(): void
     {
-        $response = Http::asForm()
-            ->withOptions(['verify' => false])
-            ->withHeaders([
-                'Accept' => 'application/json',
-                'RqUID' => (string) Str::uuid(),
-                'Authorization' => 'Basic '.$this->clientSecret,
-            ])
-            ->post($this->authUrl, [
-                'scope' => 'GIGACHAT_API_PERS',
-            ]);
+        $responce = Http::asForm()->withOptions(['verify' => false])->withHeaders([
+            'Accept' => 'application/json',
+            'RqUID' => (string)Str::uuid(),
+            'Authorization' => 'Basic ' . $this->clientSecret,
+        ])->post($this->authUrl, ['scope' => 'GIGACHAT_API_PERS']);
 
-        if ($response->failed()) {
-            throw new RuntimeException('Auth error:'.$response->body());
+        if ($responce->failed()) {
+            throw new RuntimeException('Failed auth', $responce->body());
         }
 
-        $this->accessToken = $response->json('access_token');
+        $this->accessToken = $responce->json('access_token');
     }
 }

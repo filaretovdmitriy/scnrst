@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\GigaChatService;
+use App\DTOs\RewriteData;
+use App\Http\Requests\StoreRewriteRequest;
+use App\Services\GigaChat;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class RewriteController extends Controller
 {
-    public function rewrite(Request $request, GigaChatService $gigaChatService): JsonResponse
+    public function rewrite(StoreRewriteRequest $request, GigaChat\GigaChatService $gigaChatService): JsonResponse
     {
-        $request->validate([
-            'text' => 'required|string',
-        ]);
+        $result = $gigaChatService->rewriteText(RewriteData::from($request));
 
-        $result = $gigaChatService->rewriteText($request->text);
-
-        return response()->json(['text' => $result]);
+        return response()->json(['data' => ['text' => $result]]);
     }
 }
