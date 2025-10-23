@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Script;
 
 use App\DTOs\ScriptData;
 use App\Models\Script;

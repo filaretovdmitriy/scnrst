@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Rewrite;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\RewriteRequest;
 use App\Services\GigaChat;
 use Illuminate\Http\JsonResponse;

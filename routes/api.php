@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\RewriteController;
-use App\Http\Controllers\ScriptController;
+use App\Http\Controllers\Rewrite\RewriteController;
+use App\Http\Controllers\Script\ScriptController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

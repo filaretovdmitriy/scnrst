@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Rewrite;
 
 use Tests\TestCase;
 
