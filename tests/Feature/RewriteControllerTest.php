@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 
-class GigaChatControllerTest extends TestCase
+class RewriteControllerTest extends TestCase
 {
     public function test_it_rewrites_text(): void
     {
@@ -15,19 +15,14 @@ class GigaChatControllerTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-
         $response->assertJsonStructure([
             'data' => [
                 'text',
             ],
         ]);
-
         $rewrittenText = $response->json('data.text');
-
         $this->assertIsString($rewrittenText);
-
         $this->assertNotEmpty($rewrittenText);
-
         $this->assertNotSame($originalText, $rewrittenText, 'Text should be rewritten');
     }
 }

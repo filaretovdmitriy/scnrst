@@ -13,6 +13,7 @@ class ScriptControllerTest extends TestCase
     public function test_it_returns_script_list(): void
     {
         Script::factory()->count(10)->create();
+
         $response = $this->getJson('/api/scripts');
 
         $response->assertOk()->assertJsonStructure([
@@ -27,7 +28,6 @@ class ScriptControllerTest extends TestCase
                     'updated_at',
                 ],
             ]]);
-
         $this->assertCount(10, $response->json('data'));
         $this->assertDatabaseCount('scripts', 10);
     }
@@ -42,10 +42,9 @@ class ScriptControllerTest extends TestCase
         ];
 
         $response = $this->postJson('/api/scripts', $data);
+
         $response->assertCreated();
-
         $this->assertDatabaseHas('scripts', $data);
-
         $response->assertJsonStructure([
             'data' => [
                 'id',
@@ -67,22 +66,18 @@ class ScriptControllerTest extends TestCase
             'duration' => 2,
             'status' => 0,
         ];
-
         $updateData = [
             'name' => 'Updated script name',
             'description' => 'Updated script description',
             'duration' => 1,
             'status' => 1,
         ];
-
         $script = Script::factory()->create($oldData);
 
         $response = $this->putJson("/api/scripts/{$script->id}", $updateData);
 
         $response->assertOk();
-
         $this->assertDatabaseHas('scripts', $updateData);
-
         $this->assertDatabaseMissing('scripts', $oldData);
     }
 
@@ -93,7 +88,6 @@ class ScriptControllerTest extends TestCase
         $response = $this->deleteJson("/api/scripts/{$script->id}");
 
         $response->assertStatus(204);
-
         $this->assertDatabaseMissing('scripts', [
             'id' => $script->id,
         ]);

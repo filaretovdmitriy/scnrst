@@ -2,7 +2,6 @@
 
 namespace App\Services\GigaChat;
 
-use App\DTOs\RewriteData;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -28,14 +27,14 @@ class GigaChatClient
         $this->defaultPrompt = config('services.gigachat.default_prompt');
     }
 
-    public function sendRewriteRequest(RewriteData $data, ?string $instructions = null): string
+    public function sendRewriteRequest(string $text, ?string $instructions = null): string
     {
         if (! $this->accessToken) {
             $this->auth();
         }
 
         $instructions = $instructions ?? $this->defaultPrompt;
-        $textData = $data->text;
+        $textData = $text;
         $payload = [
             'model' => 'GigaChat',
             'messages' => [
@@ -58,7 +57,7 @@ class GigaChatClient
     {
         $responce = Http::asForm()->withOptions(['verify' => false])->withHeaders([
             'Accept' => 'application/json',
-            'RqUID' => (string) Str::uuid(),
+            'RqUID' => Str::uuid()->toString(),
             'Authorization' => 'Basic '.$this->clientSecret,
         ])->post($this->authUrl, ['scope' => 'GIGACHAT_API_PERS']);
 
