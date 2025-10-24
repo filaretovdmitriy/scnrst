@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\Rewrite\RewriteService;
-use App\Services\Rewrite\RewriteServiceInterface;
+use App\Services\Ai\AiClient;
+use App\Services\Ai\IAiClient;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(RewriteServiceInterface::class, RewriteService::class);
+        //
+        $this->app->bind(IAiClient::class, AiClient::class);
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Rewrite;
 
 use Tests\TestCase;
 
-class RewriteControllerTest extends TestCase
+class AiControllerTest extends TestCase
 {
     public function test_it_rewrites_text(): void
     {

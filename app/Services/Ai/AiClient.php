@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Rewrite;
+namespace App\Services\Ai;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use RuntimeException;
 
-class GigaChatClient
+class AiClient implements IAiClient
 {
     private string $baseUrl;
 
