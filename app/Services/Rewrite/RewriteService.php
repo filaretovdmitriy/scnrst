@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\GigaChat;
+namespace App\Services\Rewrite;
 
-class GigaChatService
+class RewriteService implements RewriteServiceInterface
 {
     private string $defaultPrompt;
 

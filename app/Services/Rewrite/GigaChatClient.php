@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\GigaChat;
+namespace App\Services\Rewrite;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -29,7 +29,7 @@ class GigaChatClient
 
     public function sendRewriteRequest(string $text, ?string $instructions = null): string
     {
-        if (! $this->accessToken) {
+        if (!$this->accessToken) {
             $this->auth();
         }
 
@@ -58,7 +58,7 @@ class GigaChatClient
         $responce = Http::asForm()->withOptions(['verify' => false])->withHeaders([
             'Accept' => 'application/json',
             'RqUID' => Str::uuid()->toString(),
-            'Authorization' => 'Basic '.$this->clientSecret,
+            'Authorization' => 'Basic ' . $this->clientSecret,
         ])->post($this->authUrl, ['scope' => 'GIGACHAT_API_PERS']);
 
         if ($responce->failed()) {
