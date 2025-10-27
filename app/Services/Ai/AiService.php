@@ -2,10 +2,10 @@
 
 namespace App\Services\Ai;
 
+use App\Interfaces\Ai\IAiClient;
+
 class AiService
 {
-    private string $defaultPrompt;
-
     public function __construct(private IAiClient $AiClient)
     {
         $this->defaultPrompt = config('services.gigachat.default_prompt');

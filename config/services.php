@@ -39,7 +39,7 @@ return [
         'client_secret' => env('GIGACHAT_CLIENT_SECRET_KEY'),
         'base_url' => env('GIGACHAT_API_URL', 'https://gigachat.devices.sberbank.ru/api/v1'),
         'auth_url' => env('GIGACHAT_AUTH_URL'),
-        'default_prompt' => 'Перепиши текст, сохранив общий смысл',
+        'default_prompt' => env('AI_DEFAULT_PROMPT'),
     ],
 
 ];

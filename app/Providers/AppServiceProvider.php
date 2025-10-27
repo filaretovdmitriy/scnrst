@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\Ai\IAiClient;
 use App\Services\Ai\AiClient;
-use App\Services\Ai\IAiClient;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

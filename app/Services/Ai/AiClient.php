@@ -2,6 +2,7 @@
 
 namespace App\Services\Ai;
 
+use App\Interfaces\Ai\IAiClient;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
