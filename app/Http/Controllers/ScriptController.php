@@ -28,7 +28,7 @@ class ScriptController extends Controller
 
     public function store(StoreScriptRequest $request): ScriptResource
     {
-        $dto = ScriptData::fromArray($request->validated());
+        $dto = ScriptData::from($request->validated());
         $script = $this->scriptService->create($dto);
 
         return new ScriptResource($script);
@@ -38,7 +38,7 @@ class ScriptController extends Controller
         UpdateScriptRequest $request,
         Script $script
     ): ScriptResource {
-        $dto = ScriptData::fromArray($request->validated());
+        $dto = ScriptData::from($request->validated());
 
         return new ScriptResource($this->scriptService->update($script, $dto));
     }
