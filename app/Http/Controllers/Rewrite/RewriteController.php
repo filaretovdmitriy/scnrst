@@ -16,7 +16,7 @@ class RewriteController extends Controller
 
     }
 
-    public function rewrite(RewriteRequest $request): JsonResponse
+    public function __invoke(RewriteRequest $request): JsonResponse
     {
         $result = $this->aiService->rewriteText($request->validated('text'));
 
