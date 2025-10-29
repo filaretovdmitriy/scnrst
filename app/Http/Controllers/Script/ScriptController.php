@@ -13,7 +13,9 @@ use App\Services\Script\ScriptService;
 
 class ScriptController extends Controller
 {
-    public function __construct(private ScriptService $scriptService) {}
+    public function __construct(private ScriptService $scriptService)
+    {
+    }
 
     public function index(): ScriptCollection
     {
