@@ -40,8 +40,7 @@ class ScriptController extends Controller
     public function update(
         UpdateScriptRequest $request,
         Script              $script
-    ): ScriptResource
-    {
+    ): ScriptResource {
         $dto = ScriptData::from($request);
 
         return new ScriptResource($this->scriptService->update($script, $dto));
