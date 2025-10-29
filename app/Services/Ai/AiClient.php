@@ -30,7 +30,7 @@ class AiClient implements IAiClient
 
     public function sendRewriteRequest(string $text, ?string $instructions = null): string
     {
-        if (!$this->accessToken) {
+        if (! $this->accessToken) {
             $this->auth();
         }
 
@@ -59,7 +59,7 @@ class AiClient implements IAiClient
         $responce = Http::asForm()->withOptions(['verify' => false])->withHeaders([
             'Accept' => 'application/json',
             'RqUID' => Str::uuid()->toString(),
-            'Authorization' => 'Basic ' . $this->clientSecret,
+            'Authorization' => 'Basic '.$this->clientSecret,
         ])->post($this->authUrl, ['scope' => 'GIGACHAT_API_PERS']);
 
         if ($responce->failed()) {

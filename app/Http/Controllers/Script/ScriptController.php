@@ -13,9 +13,7 @@ use App\Services\Script\ScriptService;
 
 class ScriptController extends Controller
 {
-    public function __construct(private ScriptService $scriptService)
-    {
-    }
+    public function __construct(private ScriptService $scriptService) {}
 
     public function index(): ScriptCollection
     {
@@ -39,7 +37,7 @@ class ScriptController extends Controller
 
     public function update(
         UpdateScriptRequest $request,
-        Script              $script
+        Script $script
     ): ScriptResource {
         $dto = ScriptData::from($request);
 

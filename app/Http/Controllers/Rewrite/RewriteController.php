@@ -9,9 +9,7 @@ use Illuminate\Http\JsonResponse;
 
 class RewriteController extends Controller
 {
-    public function __construct(private AiService $aiService)
-    {
-    }
+    public function __construct(private AiService $aiService) {}
 
     public function __invoke(RewriteRequest $request): JsonResponse
     {
