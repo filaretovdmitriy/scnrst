@@ -1,15 +1,13 @@
 {
-    "preset": "laravel",
+    "preset": "psr12",
     "rules": {
         "no_extra_blank_lines": {
             "tokens": [
                 "break",
                 "continue",
-                "extra",
                 "return",
                 "throw",
                 "use",
-                "use_trait",
                 "curly_brace_block",
                 "switch",
                 "case",
