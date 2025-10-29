@@ -39,7 +39,8 @@ class AiClientTest extends TestCase
     public function test_send_rewrite_request_throws_on_failed_response()
     {
         Http::fake([
-            '*' => Http::response(['access_token' => 'demo_token'], 200),
+            'auth.url' => Http::response(['access_token' => 'demo_token'], 200),
+            'base.url/chat/completions' => Http::response(['error' => 'Bad Request'], 400),
         ]);
 
         config()->set('services.gigachat.auth_url', 'auth.url');

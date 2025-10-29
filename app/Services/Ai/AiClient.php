@@ -48,7 +48,7 @@ class AiClient implements IAiClient
 
         $response = Http::withOptions(['verify' => false])->withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
         if ($response->failed()) {
-            throw new InvalidArgumentException('Api error' . $response->body(), 0);
+            throw new InvalidArgumentException('Api error' . $response->body());
         }
 
         return $response->json('choices.0.message.content');
