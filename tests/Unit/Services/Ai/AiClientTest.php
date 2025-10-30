@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Services\Ai;
 
 use App\Services\Ai\AiClient;
 use Illuminate\Support\Facades\Http;
@@ -19,7 +19,7 @@ class AiClientTest extends TestCase
             '*' => Http::response([
                 'access_token' => 'demo_token',
                 'choices' => [['message' => ['content' => $rewrittenText]]]
-            ], 200)
+            ])
         ]);
         config()->set('services.gigachat.auth_url', 'auth.url');
         config()->set('services.gigachat.base_url', 'base.url');
@@ -36,19 +36,21 @@ class AiClientTest extends TestCase
     public function test_send_rewrite_request_throws_on_failed_response()
     {
         $originalText = 'Оригинальный текст';
+        $promptText = 'Тестовый промпт';
+        $fakeSecret = 'fake_secret';
         Http::fake([
-            'auth.url' => Http::response(['access_token' => 'demo_token'], 200),
+            'auth.url' => Http::response(['access_token' => 'demo_token']),
             'base.url/chat/completions' => Http::response(['error' => 'Bad Request'], 400),
         ]);
         config()->set('services.gigachat.auth_url', 'auth.url');
         config()->set('services.gigachat.base_url', 'base.url');
-        config()->set('services.gigachat.client_secret', 'fake_secret');
-        config()->set('services.gigachat.default_prompt', 'default prompt');
+        config()->set('services.gigachat.client_secret', $fakeSecret);
+        config()->set('services.gigachat.default_prompt', $promptText);
         $client = new AiClient();
 
         $this->expectException(InvalidArgumentException::class);
 
-        $client->sendRewriteRequest('original text');
+        $client->sendRewriteRequest($originalText);
     }
 
     public function test_auth_throws_on_failed_auth()

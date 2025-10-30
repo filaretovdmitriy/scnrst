@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Services\Ai;
 
 use App\Interfaces\Ai\IAiClient;
 use App\Services\Ai\AiService;
