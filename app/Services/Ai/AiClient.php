@@ -48,7 +48,7 @@ class AiClient implements IAiClient
 
         $response = Http::withOptions(['verify' => false])->withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
         if ($response->failed()) {
-            throw new InvalidArgumentException('Api error', $response->body());
+            throw new InvalidArgumentException('Api error' . $response->body());
         }
 
         return $response->json('choices.0.message.content');
@@ -63,7 +63,7 @@ class AiClient implements IAiClient
         ])->post($this->authUrl, ['scope' => 'GIGACHAT_API_PERS']);
 
         if ($responce->failed()) {
-            throw new RuntimeException('Failed auth', $responce->body());
+            throw new RuntimeException('Failed auth' . $responce->body(), 0);
         }
 
         $this->accessToken = $responce->json('access_token');
