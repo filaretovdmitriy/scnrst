@@ -2,6 +2,9 @@
 
 namespace Tests\Unit\Services\Ai;
 
+use App\Exceptions\AiClient\AiClientAuthException;
+
+use App\Exceptions\AiClient\AiClientResponseException;
 use App\Services\Ai\AiClient;
 use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
@@ -48,7 +51,7 @@ class AiClientTest extends TestCase
         config()->set('services.gigachat.default_prompt', $promptText);
         $client = new AiClient();
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(AiClientResponseException::class);
 
         $client->sendRewriteRequest($originalText);
     }
@@ -67,7 +70,7 @@ class AiClientTest extends TestCase
         config()->set('services.gigachat.default_prompt', $promptText);
         $client = new AiClient();
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(AiClientAuthException::class);
 
         $client->sendRewriteRequest($originalText);
     }
