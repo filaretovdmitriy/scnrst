@@ -12,7 +12,6 @@ class AuthController extends Controller
 {
     public function __construct(private UserService $userService)
     {
-
     }
 
     public function register(AuthRequest $request): UserResource
