@@ -6,8 +6,4 @@ use Exception;
 
 class AiClientException extends Exception
 {
-
 }
-
-
-

@@ -3,12 +3,9 @@
 namespace Tests\Unit\Services\Ai;
 
 use App\Exceptions\AiClient\AiClientAuthException;
-
 use App\Exceptions\AiClient\AiClientResponseException;
 use App\Services\Ai\AiClient;
 use Illuminate\Support\Facades\Http;
-use InvalidArgumentException;
-use RuntimeException;
 use Tests\TestCase;
 
 class AiClientTest extends TestCase
