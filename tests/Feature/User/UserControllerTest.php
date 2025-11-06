@@ -63,4 +63,11 @@ class UserControllerTest extends TestCase
             'tokenable_id' => $user->id,
         ]);
     }
+
+    public function test_guest_cannot_logout(): void
+    {
+        $response = $this->postJson('/api/user/logout');
+
+        $response->assertStatus(401);
+    }
 }
