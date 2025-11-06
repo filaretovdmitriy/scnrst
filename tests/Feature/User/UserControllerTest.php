@@ -11,6 +11,7 @@ class UserControllerTest extends TestCase
 
     public function test_it_creates_user(): void
     {
+
         $payload = [
             'name' => 'Dmitriy',
             'email' => 'test@example.com',

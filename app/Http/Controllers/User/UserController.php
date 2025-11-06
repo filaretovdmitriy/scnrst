@@ -33,11 +33,18 @@ class UserController extends Controller
         return (new AuthUserResource($user))->withToken($user->createToken('auth_token')->plainTextToken);
     }
 
-    public function logout()
+    public function logout(AuthRequest $request)
     {
+        $request->user()->tokens()->delete();
+
+        return response()->noContent();
     }
 
-    public function user()
+    public function user(StoreRequest $request): UserResource
     {
+        $dto = UserData::from($request);
+        $user = $this->userService->getUserByData($dto);
+
+        return new UserResource($user);
     }
 }
