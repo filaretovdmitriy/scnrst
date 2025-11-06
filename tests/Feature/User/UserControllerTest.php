@@ -18,9 +18,7 @@ class UserControllerTest extends TestCase
             'password_confirmation' => 'secret123',
         ];
 
-
         $response = $this->postJson('/api/user/register', $payload);
-
         $response->assertStatus(201)
             ->assertJsonStructure([
                 'data' => [
@@ -30,7 +28,6 @@ class UserControllerTest extends TestCase
                 ],
             ]);
 
-        // Проверяем, что пользователь действительно создан
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',
         ]);
