@@ -2,6 +2,9 @@
 
 namespace App\Services\Ai;
 
+use App\Exceptions\AiClient\AiClientAuthException;
+
+use App\Exceptions\AiClient\AiClientResponseException;
 use App\Interfaces\Ai\IAiClient;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -20,17 +23,17 @@ class AiClient implements IAiClient
 
     private ?string $accessToken = null;
 
-    public function __construct()
+    public function __construct(string $baseUrl, string $clientSecret, string $authUrl, string $defaultPrompt)
     {
-        $this->baseUrl = config('services.gigachat.base_url');
-        $this->clientSecret = config('services.gigachat.client_secret');
-        $this->authUrl = config('services.gigachat.auth_url');
-        $this->defaultPrompt = config('services.gigachat.default_prompt');
+        $this->baseUrl = $baseUrl;
+        $this->clientSecret = $clientSecret;
+        $this->authUrl = $authUrl;
+        $this->defaultPrompt = $defaultPrompt;
     }
 
     public function sendRewriteRequest(string $text, ?string $instructions = null): string
     {
-        if (! $this->accessToken) {
+        if (!$this->accessToken) {
             $this->auth();
         }
 
@@ -48,7 +51,7 @@ class AiClient implements IAiClient
 
         $response = Http::withOptions(['verify' => false])->withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
         if ($response->failed()) {
-            throw new InvalidArgumentException('Api error', $response->body());
+            throw new AiClientResponseException();
         }
 
         return $response->json('choices.0.message.content');
@@ -59,11 +62,11 @@ class AiClient implements IAiClient
         $responce = Http::asForm()->withOptions(['verify' => false])->withHeaders([
             'Accept' => 'application/json',
             'RqUID' => Str::uuid()->toString(),
-            'Authorization' => 'Basic '.$this->clientSecret,
+            'Authorization' => 'Basic ' . $this->clientSecret,
         ])->post($this->authUrl, ['scope' => 'GIGACHAT_API_PERS']);
 
         if ($responce->failed()) {
-            throw new RuntimeException('Failed auth', $responce->body());
+            throw new AiClientAuthException();
         }
 
         $this->accessToken = $responce->json('access_token');
