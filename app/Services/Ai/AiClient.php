@@ -23,12 +23,12 @@ class AiClient implements IAiClient
 
     private ?string $accessToken = null;
 
-    public function __construct()
+    public function __construct(string $baseUrl, string $clientSecret, string $authUrl, string $defaultPrompt)
     {
-        $this->baseUrl = config('services.gigachat.base_url');
-        $this->clientSecret = config('services.gigachat.client_secret');
-        $this->authUrl = config('services.gigachat.auth_url');
-        $this->defaultPrompt = config('services.gigachat.default_prompt');
+        $this->baseUrl = $baseUrl;
+        $this->clientSecret = $clientSecret;
+        $this->authUrl = $authUrl;
+        $this->defaultPrompt = $defaultPrompt;
     }
 
     public function sendRewriteRequest(string $text, ?string $instructions = null): string

@@ -24,11 +24,8 @@ class AiClientTest extends TestCase
                 'choices' => [['message' => ['content' => $rewrittenText]]]
             ])
         ]);
-        config()->set('services.gigachat.auth_url', 'auth.url');
-        config()->set('services.gigachat.base_url', 'base.url');
-        config()->set('services.gigachat.client_secret', 'fake_secret');
-        config()->set('services.gigachat.default_prompt', 'default prompt');
-        $client = new AiClient();
+
+        $client = new AiClient('base.url', 'fake_secret', 'auth.url', 'default prompt');
 
         $result = $client->sendRewriteRequest($originalText, $promptText);
 
@@ -45,11 +42,9 @@ class AiClientTest extends TestCase
             'auth.url' => Http::response(['access_token' => 'demo_token']),
             'base.url/chat/completions' => Http::response(['error' => 'Bad Request'], 400),
         ]);
-        config()->set('services.gigachat.auth_url', 'auth.url');
-        config()->set('services.gigachat.base_url', 'base.url');
-        config()->set('services.gigachat.client_secret', $fakeSecret);
-        config()->set('services.gigachat.default_prompt', $promptText);
-        $client = new AiClient();
+
+        $client = new AiClient('base.url', $fakeSecret, 'auth.url', $promptText);
+
 
         $this->expectException(AiClientResponseException::class);
 
@@ -64,14 +59,10 @@ class AiClientTest extends TestCase
         Http::fake([
             '*' => Http::response(['error' => 'unauthorized'], 401),
         ]);
-        config()->set('services.gigachat.auth_url', 'auth.url');
-        config()->set('services.gigachat.base_url', 'base.url');
-        config()->set('services.gigachat.client_secret', $fakeSecret);
-        config()->set('services.gigachat.default_prompt', $promptText);
-        $client = new AiClient();
+
+        $client = new AiClient('base.url', $fakeSecret, 'auth.url', $promptText);
 
         $this->expectException(AiClientAuthException::class);
-
         $client->sendRewriteRequest($originalText);
     }
 }
