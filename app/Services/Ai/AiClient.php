@@ -3,13 +3,10 @@
 namespace App\Services\Ai;
 
 use App\Exceptions\AiClient\AiClientAuthException;
-
 use App\Exceptions\AiClient\AiClientResponseException;
 use App\Interfaces\Ai\IAiClient;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
-use RuntimeException;
 
 class AiClient implements IAiClient
 {

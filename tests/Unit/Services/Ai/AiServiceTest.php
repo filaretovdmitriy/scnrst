@@ -20,7 +20,9 @@ class AiServiceTest extends TestCase
             ->once()
             ->with($originalText, null)
             ->andReturn($rewrittenText);
-        $service = new AiService($mockClient);
+
+        $this->app->instance(IAiClient::class, $mockClient);
+        $service = app(AiService::class);
         $result = $service->rewriteText($originalText);
 
         $this->assertEquals($rewrittenText, $result);

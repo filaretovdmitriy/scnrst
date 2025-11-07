@@ -13,7 +13,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-
         $this->app->singleton(IAiClient::class, function ($app) {
             $config = config('services.gigachat');
             return new AiClient(
