@@ -22,7 +22,8 @@ class UserController extends Controller
         $dto = UserData::from($request);
         $user = $this->userService->create($dto);
 
-        return new UserResource($user);
+
+        return (new UserResource($user))->withToken($user->createToken('auth_token')->plainTextToken);
     }
 
     public function login(AuthRequest $request): AuthUserResource
