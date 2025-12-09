@@ -55,7 +55,7 @@ class UserControllerTest extends TestCase
                     'email',
                     'name',
                     'token',
-                    'password'
+                    'password',
                 ],
             ]);
 

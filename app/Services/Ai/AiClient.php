@@ -30,7 +30,7 @@ class AiClient implements IAiClient
 
     public function sendRewriteRequest(string $text, ?string $instructions = null): string
     {
-        if (!$this->accessToken) {
+        if (! $this->accessToken) {
             $this->auth();
         }
 
@@ -48,7 +48,7 @@ class AiClient implements IAiClient
 
         $response = Http::withOptions(['verify' => false])->withToken($this->accessToken)->post("{$this->baseUrl}/chat/completions", $payload);
         if ($response->failed()) {
-            throw new AiClientResponseException();
+            throw new AiClientResponseException;
         }
 
         return $response->json('choices.0.message.content');
@@ -59,11 +59,11 @@ class AiClient implements IAiClient
         $responce = Http::asForm()->withOptions(['verify' => false])->withHeaders([
             'Accept' => 'application/json',
             'RqUID' => Str::uuid()->toString(),
-            'Authorization' => 'Basic ' . $this->clientSecret,
+            'Authorization' => 'Basic '.$this->clientSecret,
         ])->post($this->authUrl, ['scope' => 'GIGACHAT_API_PERS']);
 
         if ($responce->failed()) {
-            throw new AiClientAuthException();
+            throw new AiClientAuthException;
         }
 
         $this->accessToken = $responce->json('access_token');

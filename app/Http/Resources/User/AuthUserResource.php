@@ -17,6 +17,7 @@ class AuthUserResource extends BaseResource
     public function withToken(string $token): self
     {
         $this->token = $token;
+
         return $this;
     }
 
@@ -28,7 +29,7 @@ class AuthUserResource extends BaseResource
             'email' => $this->email,
             'password' => $this->password,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
 
         if ($this->token) {
@@ -37,7 +38,7 @@ class AuthUserResource extends BaseResource
 
         return [
             'data' => $data,
-            'result' => 'success'
+            'result' => 'success',
         ];
     }
 }

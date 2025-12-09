@@ -12,6 +12,7 @@ class UserResource extends JsonResource
     public function withToken(string $token): self
     {
         $this->token = $token;
+
         return $this;
     }
 

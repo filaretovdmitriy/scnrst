@@ -2,6 +2,4 @@
 
 namespace App\Exceptions\User;
 
-class UserAuthException extends UserException
-{
-}
+class UserAuthException extends UserException {}

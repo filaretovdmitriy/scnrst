@@ -4,6 +4,4 @@ namespace App\Exceptions\AiClient;
 
 use Exception;
 
-class AiClientException extends Exception
-{
-}
+class AiClientException extends Exception {}

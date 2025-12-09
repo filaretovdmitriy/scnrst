@@ -11,7 +11,7 @@ class BaseResource extends JsonResource
     {
         return [
             'data' => parent::toArray($request),
-            'result' => 'success'
+            'result' => 'success',
         ];
     }
 }

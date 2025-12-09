@@ -11,6 +11,5 @@ class ScriptData extends Data
         public string $description,
         public int $status,
         public int $duration,
-    ) {
-    }
+    ) {}
 }

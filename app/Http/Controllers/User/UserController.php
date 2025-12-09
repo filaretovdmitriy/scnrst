@@ -13,15 +13,12 @@ use App\Services\User\UserService;
 
 class UserController extends Controller
 {
-    public function __construct(private UserService $userService)
-    {
-    }
+    public function __construct(private UserService $userService) {}
 
     public function register(StoreRequest $request): UserResource
     {
         $dto = UserData::from($request);
         $user = $this->userService->create($dto);
-
 
         return (new UserResource($user))->withToken($user->createToken('auth_token')->plainTextToken);
     }
