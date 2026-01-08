@@ -12,3 +12,5 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('scripts', ScriptController::class);
 
 Route::post('/rewrite', RewriteController::class);
+
+Route::apiResource('test', ScriptController::class);
